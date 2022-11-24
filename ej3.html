@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <label for="nombre">Nombre: </label>
+    <input type="text" id="nombre">
+    <br>
+    <label for="apellidos">apellidos: </label>
+    <input type="text" id="apellidos">
+    <br>
+    <label for="dni">DNI: </label>
+    <input type="text" id="dni">
+    <br>
+    <label for="moduos">Módulos: </label>
+    <input type="text" id="modulos">
+    <br>
+    <button id="crear">Añadir Alumno</button>
+    <button id="asc">Orden ascendente</button>
+    <button id="desc">Orden descendente</button>
+
+    <div id="info"></div>
+
+</body>
+
+<footer>
+    <script>
+        //clase alumnos
+        class Alumno {
+            constructor(nombre, apellidos, dni, modulos) {
+                this.nombre = nombre;
+                this.apellidos = apellidos;
+                this.dni = dni;
+                this.modulos = modulos;
+            }
+        }
+
+        /**
+         * Recojo los datos introducidos y los devuelvo como clase alumno
+         */
+        function crearAlumnos() {
+            var nombre = document.getElementById("nombre").value;
+            var apellidos = document.getElementById("apellidos").value;
+            var dni = document.getElementById("dni").value;
+            var modulos = document.getElementById("modulos").value;
+            return new Alumno(nombre, apellidos, dni, modulos);
+        }
+
+        /**
+         * Muestro la información de los alumnos sea cual sea el orden elegido
+         */
+        function muestraAlumnos(alumnos) {
+            var output = " <table><thead> <tr>  <th>Nombre</th>  <th>Apellidos</th>  <th>DNI</th>  <th>Módulos</th>  </tr></thead>  <tbody>";
+            for (const i in alumnos) {
+                output += "<tr>"
+                for (const j in alumnos[i]) {
+                    output += "<td>" + alumnos[i][j] + "</td>"
+                }
+                output += "</tr>"
+            }
+            output += "</tbody></table>"
+            return output;
+        }
+
+        function main() {
+            var arAlumnos = [];
+            var crear = document.getElementById("crear");
+            var ascendente = document.getElementById("asc");
+            var descendente = document.getElementById("desc");
+            var info = document.getElementById("info");
+
+            //Evento crear alumno
+            crear.addEventListener("click", evt => {
+                output = ""
+                //guardo en un array los diferentes alumnos
+                arAlumnos.push(crearAlumnos());
+                console.log(arAlumnos);
+
+                info.innerHTML = muestraAlumnos(arAlumnos);
+
+            })
+
+            //Evento para ordenar ascendentemente por apellidos
+            ascendente.addEventListener("click", evt => {
+                arAlumnos.sort((a, b) => (a.apellidos > b.apellidos) ? 1 : -1)
+                console.log(arAlumnos);
+
+                info.innerHTML = muestraAlumnos(arAlumnos)
+
+
+            })
+
+            //Evento para ordenar descendentemente por apellidos
+            descendente.addEventListener("click", evt => {
+                arAlumnos.sort((a, b) => (a.apellidos < b.apellidos) ? 1 : -1)
+                console.log(arAlumnos);
+
+                info.innerHTML = muestraAlumnos(arAlumnos)
+            })
+
+
+        }
+
+        main()
+
+
+    </script>
+</footer>
+
+</html>

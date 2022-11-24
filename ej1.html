@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function calculoLetra() {
+            var letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
+            //recojo el valor introducido por elusuario
+            var DNI = document.getElementById("numDNI").value;
+            var mensajes = document.getElementById("mensajes")
+            var errorNum = false;
+            var auxDNI = 0;
+
+            //separo el número
+            numDNI = DNI.slice(0, -1);
+            //separo la letra y la pongo en mayúsculas
+            letraDNI = DNI.slice(-1).toUpperCase();
+
+            //recorro el número para comprobar que realmente todo lo introducido son números         
+            for (let i = 0; i < numDNI.length; i++) {
+                //Si alguno no lo es, devolverá un NaN
+                auxDNI = parseInt(numDNI[i]);
+                if (isNaN(auxDNI)) {
+                    errorNum = true;
+                }
+            }
+
+            if (errorNum) {
+                numDNI = -1;
+            } else {
+                numDNI = parseInt(numDNI);
+
+            }
+
+            mensajes.innerHTML = "";
+
+            //si al introducir el numero se puso una letra por el medio, parseInt devuelve un NaN
+            if (numDNI <= 0 || numDNI > 99999999 || isNaN(numDNI)) {
+
+                mensajes.innerHTML += "Número no válido<br>";
+            } else {
+                var pos = numDNI % 23;
+                if (letras[pos] == letraDNI) {
+                    mensajes.innerHTML += "El número " + numDNI + " y la letra " + letraDNI + " son validos"
+                } else {
+                    mensajes.innerHTML += "El número " + numDNI + " y la letra " + letraDNI + " NO son validos"
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <label for="nDNI">Número de DNI</label>
+    <input id="numDNI" name="nDNI" type="text" value="a9456822T"> <br>
+
+    <button onclick="calculoLetra()">Enviar datos</button>
+    <div id="mensajes"></div>
+</body>
+
+</html>

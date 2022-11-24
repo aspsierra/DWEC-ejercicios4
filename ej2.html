@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1><strong>EL RESULTADO SE MUESTRA EN LA CONSOLA</strong></h1>
+
+</body>
+
+<footer>
+    <script>
+        function main() {
+            /**
+             * objeto persona
+             */
+            function Persona() {
+                this.nombre = "";
+                this.edad = "";
+                this.genero = "";
+
+            }
+            /**
+             * Objeto Estudiante
+             */
+            function Estudiante() {
+                this.curso = "";
+                this.grupo = "";
+            }
+            /**
+             * Objeto Profesor
+             */
+            var Profesor = function () {
+                this.asignatura = "";
+                this.nivel = "";
+            }
+
+            //Agrego a presona la función de "obtDetalles"
+            Persona.prototype.obtDetalles = function () {
+                for (const key in this) {
+                    if (!(typeof (this[key]) == "function")) {
+                        console.log(key + " => " + this[key])
+                    }
+                }
+                console.log(this)
+            }
+
+            //"Estudiante" y "Profesor" heredan los atributos y funciones de persona
+            for (const id in Persona.prototype) {
+                Estudiante.prototype[id] = Persona.prototype[id];
+                Profesor.prototype[id] = Persona.prototype[id];
+            }
+
+            //añado la funcion "registrar" a "estudiante"
+            Estudiante.prototype.registrar = function (nombre, edad, genero, curso, grupo) {
+                this.nombre = nombre;
+                this.edad = edad;
+                this.genero = genero;
+                this.curso = curso;
+                this.grupo = grupo;
+            }
+
+            //Añado "asignar" a "Profesor"
+            Profesor.prototype.asignar = function (nombre, edad, genero, asignatura, nivel) {
+                this.nombre = nombre;
+                this.edad = edad;
+                this.genero = genero;
+                this.asignatura = asignatura;
+                this.nivel = nivel;
+            }
+
+            var alvaro = new Estudiante();
+            alvaro.registrar("Álvaro", 25, "Hombre", "2º", "DAW");
+
+            var raul = new Profesor();
+            raul.asignar("Raúl", 23, "Hombre", "DAW", "Bajo tirando a negativo")
+
+            alvaro.obtDetalles();
+            console.log("----------------------------------")
+            raul.obtDetalles();
+
+        }
+
+        main()
+    </script>
+</footer>
+
+</html>
